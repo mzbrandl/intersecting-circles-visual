@@ -6,28 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Intersecting Circles</title>
     <style>
-      * {
+      body {
         padding: 0;
         margin: 0;
       }
       canvas {
-        height: 100vh;
-        width: 100vw;
+        height: 600px;
+        width: 800px; 
+        margin-left: auto;
+        margin-right: auto;
         display: block;
+        position: absolute;
+        /* left: 0;
+        top: 0; */
       }
     </style>
   </head>
   <body>
     <div style="position: relative">
-      <canvas
-        id="bg"
-        style="position: absolute; left: 0; top: 0; z-index: 0"
-      ></canvas>
-      <canvas
-        id="l1"
-        style="position: absolute; left: 0; top: 0; z-index: 1"
-      ></canvas>
-      <canvas id="l2"></canvas>
+      <canvas id="bg" width="800" height="600" style="z-index: 0"></canvas>
+      <canvas id="l1" width="800" height="600" style="z-index: 1"></canvas>
+      <canvas id="l2" width="800" height="600" style="z-index: 2"></canvas>
     </div>
     <script src="./script.js"></script>
   </body>

@@ -1,5 +1,5 @@
-const height = window.innerHeight;
-const width = window.innerWidth;
+const height = 600;
+const width = 800;
 const lineWidth = 20;
 
 var c = document.getElementById("bg");
@@ -17,11 +17,15 @@ bg.rect(0, 0, width, height);
 bg.fillStyle = "black";
 bg.fill();
 
-
-const xStart = width + height + lineWidth / 2;
+const xStart = width + height + lineWidth * 2;
 var xPos = xStart;
-function draw() {
+
+function draw(timestamp) {
   l1.clearRect(0, 0, width, height);
+  // // if (!start || progress > 400) start = timestamp * -1;
+  // progress = Math.floor(start - timestamp / 10);
+
+  // console.log(progress);
 
   function drawArc(x) {
     l1.beginPath();
@@ -30,12 +34,21 @@ function draw() {
     l1.lineWidth = lineWidth;
     l1.stroke();
   }
-
-  if (xStart - (xPos % lineWidth) * 2) {
-    drawArc(xPos + lineWidth * 2);
+  // drawArc(xPos);
+  // drawArc(xPos + lineWidth * 2);
+  // drawArc(xPos + lineWidth * 4);
+  // drawArc(xPos + lineWidth * 6);
+  // drawArc(xPos + lineWidth * 8);
+  var pro = xPos;
+  while (pro > 0) {
+    drawArc(pro - lineWidth * 2);
+    pro -= lineWidth * 2;
   }
-  drawArc(xPos);
-  xPos -= 1;
+  // for (let i = 1; i < 100; i++) {
+  //   drawArc(xPos + lineWidth * (i * 2));
+  // }
+
+  xPos--;
 
   window.requestAnimationFrame(draw);
 }
