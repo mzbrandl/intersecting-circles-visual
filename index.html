@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Intersecting Circles</title>
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+      }
+      canvas {
+        height: 100vh;
+        width: 100vw;
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <div style="position: relative">
+      <canvas
+        id="bg"
+        style="position: absolute; left: 0; top: 0; z-index: 0"
+      ></canvas>
+      <canvas
+        id="l1"
+        style="position: absolute; left: 0; top: 0; z-index: 1"
+      ></canvas>
+      <canvas id="l2"></canvas>
+    </div>
+    <script src="./script.js"></script>
+  </body>
+</html>
