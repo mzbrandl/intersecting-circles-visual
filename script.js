@@ -1,14 +1,20 @@
-const height = 600;
-const width = 800;
-const lineWidth = 20;
+const height = window.innerHeight;
+const width = window.innerHeight;
+const lineWidth = 50;
 
 var c = document.getElementById("bg");
+c.width = width;
+c.height = height;
 var bg = c.getContext("2d");
 
 var c2 = document.getElementById("l1");
+c2.width = width;
+c2.height = height;
 var l1 = c2.getContext("2d");
 
 var c3 = document.getElementById("l2");
+c3.width = width;
+c3.height = height;
 var l2 = c3.getContext("2d");
 
 // Background
@@ -18,14 +24,13 @@ bg.fillStyle = "black";
 bg.fill();
 
 const xStart = width + height + lineWidth * 2;
+const xStart2 = 0 - height - lineWidth * 2;
 var xPos = xStart;
+var xPos2 = xStart2;
+const speed = 0.4;
 
-function draw(timestamp) {
+function draw() {
   l1.clearRect(0, 0, width, height);
-  // // if (!start || progress > 400) start = timestamp * -1;
-  // progress = Math.floor(start - timestamp / 10);
-
-  // console.log(progress);
 
   function drawArc(x) {
     l1.beginPath();
@@ -34,23 +39,46 @@ function draw(timestamp) {
     l1.lineWidth = lineWidth;
     l1.stroke();
   }
-  // drawArc(xPos);
-  // drawArc(xPos + lineWidth * 2);
-  // drawArc(xPos + lineWidth * 4);
-  // drawArc(xPos + lineWidth * 6);
-  // drawArc(xPos + lineWidth * 8);
-  var pro = xPos;
-  while (pro > 0) {
-    drawArc(pro - lineWidth * 2);
-    pro -= lineWidth * 2;
-  }
-  // for (let i = 1; i < 100; i++) {
-  //   drawArc(xPos + lineWidth * (i * 2));
-  // }
 
-  xPos--;
+  const lineCount = width / lineWidth / 2 + 10; // 10 extra lines for corners
+  for (let i = 0; i < lineCount; i++) {
+    drawArc(xPos - i * lineWidth * 2);
+  }
+
+  xPos -= speed;
+
+  if (xPos <= xStart - lineWidth * 2) {
+    xPos = xStart;
+  }
 
   window.requestAnimationFrame(draw);
 }
 
+function draw2() {
+  l2.clearRect(0, 0, width, height);
+
+  function drawArc2(x) {
+    l2.beginPath();
+    l2.arc(x, height / 2, height, 1.5 * Math.PI, 0.5 * Math.PI);
+    l2.strokeStyle = "black";
+    l2.lineWidth = lineWidth;
+    l2.stroke();
+  }
+
+  const lineCount = width / lineWidth / 2 + 10; // 10 extra lines for corners
+
+  for (let i = 0; i < lineCount; i++) {
+    drawArc2(xPos2 + i * lineWidth * 2);
+  }
+
+  xPos2 += speed;
+
+  if (xPos2 >= xStart2 + lineWidth * 2) {
+    xPos2 = xStart2;
+  }
+
+  window.requestAnimationFrame(draw2);
+}
+
 draw();
+draw2();
