@@ -1,84 +1,98 @@
-const height = window.innerHeight;
-const width = window.innerHeight;
-const lineWidth = 50;
+// Variables
+// Canvases
+let bgCanvas = document.getElementById("bg");
+let l1Canvas = document.getElementById("l1");
+let l2Canvas = document.getElementById("l2");
 
-var c = document.getElementById("bg");
-c.width = width;
-c.height = height;
-var bg = c.getContext("2d");
+// Contexts
+let bgContext = bgCanvas.getContext("2d");
+let l1Context = l1Canvas.getContext("2d");
+let l2Context = l2Canvas.getContext("2d");
 
-var c2 = document.getElementById("l1");
-c2.width = width;
-c2.height = height;
-var l1 = c2.getContext("2d");
+// Parameters
+let height = window.innerHeight;
+let width = window.innerWidth;
+let radius = height;
+let lineWidth = 20;
+let lineGap = 20;
+let speed = 0.4;
+let bend;
 
-var c3 = document.getElementById("l2");
-c3.width = width;
-c3.height = height;
-var l2 = c3.getContext("2d");
+let isControlOpen = true;
 
-// Background
-bg.beginPath();
-bg.rect(0, 0, width, height);
-bg.fillStyle = "black";
-bg.fill();
+function toggleControls() {
+  let form = document.querySelector(".form");
+  let toggle = document.querySelector(".toggle");
+  if (isControlOpen) {
+    form.style.display = "none";
+    toggle.innerHTML = "<img src=\"./arrowRight.svg\"/>";
+  } else {
+    form.style.display = "grid";
+    toggle.innerHTML = "<img src=\"./arrowLeft.svg\"/>";
+  }
+  isControlOpen = !isControlOpen;
+}
 
-const xStart = width + height + lineWidth * 2;
-const xStart2 = 0 - height - lineWidth * 2;
-var xPos = xStart;
-var xPos2 = xStart2;
-const speed = 0.4;
+function init() {
+  width = window.innerWidth;
+  height = window.innerHeight;
+  bgCanvas.width = width;
+  bgCanvas.height = height;
+  l1Canvas.width = width;
+  l1Canvas.height = height;
+  l2Canvas.width = width;
+  l2Canvas.height = height;
+
+  document.getElementById("bend").min = height / 2 + lineWidth;
+  document.getElementById("bend").max = height;
+  radius = document.getElementById("bend").value;
+  speed = document.getElementById("speed").value;
+  // lineWidth = document.getElementById("lineWidth").value;
+  // lineGap = document.getElementById("lineGap").value;
+
+  bgContext.beginPath();
+  bgContext.rect(0, 0, width, height);
+  bgContext.fillStyle = "black";
+  bgContext.fill();
+}
+
+init();
+
+let xStart = 0;
+let xPos = xStart;
 
 function draw() {
-  l1.clearRect(0, 0, width, height);
+  window.onresize = init;
+  l1Context.clearRect(0, 0, width, height);
+  l2Context.clearRect(0, 0, width, height);
 
   function drawArc(x) {
-    l1.beginPath();
-    l1.arc(x, height / 2, height, 0.5 * Math.PI, 1.5 * Math.PI);
-    l1.strokeStyle = "red";
-    l1.lineWidth = lineWidth;
-    l1.stroke();
+    l1Context.beginPath();
+    l1Context.arc(x, height / 2, radius, 0.5 * Math.PI, 1.5 * Math.PI);
+    l1Context.strokeStyle = "red";
+    l1Context.lineWidth = lineWidth;
+    l1Context.stroke();
+
+    l2Context.beginPath();
+    l2Context.arc(width - x, height / 2, radius, 1.5 * Math.PI, 0.5 * Math.PI);
+    l2Context.strokeStyle = "black";
+    l2Context.lineWidth = lineWidth;
+    l2Context.stroke();
   }
 
-  const lineCount = width / lineWidth / 2 + 10; // 10 extra lines for corners
+  const lineCount = (width + height) / (lineWidth + lineGap) + 1;
+
   for (let i = 0; i < lineCount; i++) {
-    drawArc(xPos - i * lineWidth * 2);
+    drawArc(xPos + i * (lineWidth + lineGap));
   }
 
   xPos -= speed;
 
-  if (xPos <= xStart - lineWidth * 2) {
+  if (xPos <= xStart - lineWidth - lineGap) {
     xPos = xStart;
   }
 
   window.requestAnimationFrame(draw);
 }
 
-function draw2() {
-  l2.clearRect(0, 0, width, height);
-
-  function drawArc2(x) {
-    l2.beginPath();
-    l2.arc(x, height / 2, height, 1.5 * Math.PI, 0.5 * Math.PI);
-    l2.strokeStyle = "black";
-    l2.lineWidth = lineWidth;
-    l2.stroke();
-  }
-
-  const lineCount = width / lineWidth / 2 + 10; // 10 extra lines for corners
-
-  for (let i = 0; i < lineCount; i++) {
-    drawArc2(xPos2 + i * lineWidth * 2);
-  }
-
-  xPos2 += speed;
-
-  if (xPos2 >= xStart2 + lineWidth * 2) {
-    xPos2 = xStart2;
-  }
-
-  window.requestAnimationFrame(draw2);
-}
-
 draw();
-draw2();
