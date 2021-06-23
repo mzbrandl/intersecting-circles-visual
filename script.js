@@ -17,6 +17,8 @@ let lineWidth = 20;
 let lineGap = 20;
 let speed = 0.4;
 let bend;
+let color1 = "red";
+let color2 = "red";
 
 let isControlOpen = true;
 
@@ -25,10 +27,10 @@ function toggleControls() {
   let toggle = document.querySelector(".toggle");
   if (isControlOpen) {
     form.style.display = "none";
-    toggle.innerHTML = "<img src=\"./arrowRight.svg\"/>";
+    toggle.innerHTML = '<img src="./arrowRight.svg"/>';
   } else {
     form.style.display = "grid";
-    toggle.innerHTML = "<img src=\"./arrowLeft.svg\"/>";
+    toggle.innerHTML = '<img src="./arrowLeft.svg"/>';
   }
   isControlOpen = !isControlOpen;
 }
@@ -49,6 +51,9 @@ function init() {
   speed = document.getElementById("speed").value;
   // lineWidth = document.getElementById("lineWidth").value;
   // lineGap = document.getElementById("lineGap").value;
+  color1 = document.getElementById("color1").value;
+  color2 = document.getElementById("color2").value;
+  console.log(radius);
 
   bgContext.beginPath();
   bgContext.rect(0, 0, width, height);
@@ -69,13 +74,13 @@ function draw() {
   function drawArc(x) {
     l1Context.beginPath();
     l1Context.arc(x, height / 2, radius, 0.5 * Math.PI, 1.5 * Math.PI);
-    l1Context.strokeStyle = "red";
+    l1Context.strokeStyle = color1;
     l1Context.lineWidth = lineWidth;
     l1Context.stroke();
 
     l2Context.beginPath();
     l2Context.arc(width - x, height / 2, radius, 1.5 * Math.PI, 0.5 * Math.PI);
-    l2Context.strokeStyle = "black";
+    l2Context.strokeStyle = color2;
     l2Context.lineWidth = lineWidth;
     l2Context.stroke();
   }

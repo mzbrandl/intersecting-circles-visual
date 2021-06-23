@@ -56,18 +56,20 @@
     <div class="controls">
       <div class="form">
         <label for="bend">Bend</label>
-        <input type="range" name="bend" id="bend" oninput="init()" />
+        <input type="range" name="bend" value="750" id="bend" oninput="init()" />
         <label for="speed">Speed</label>
         <input
           type="range"
           name="speed"
           id="speed"
           min="0"
-          max="2"
+          max="1"
           value="0.5"
           step="0.01"
           oninput="init()"
         />
+        <input type="color" name="color1" id="color1" oninput="init()" />
+        <input type="color" name="color2" id="color2" oninput="init()" />
         <!-- <label for="lineWidth">Line width</label>
       <input
         type="range"
